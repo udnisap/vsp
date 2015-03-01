@@ -6,14 +6,15 @@
 
 <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 
-<div id="player" style="width: 100%; height: 500px;">
+<div class="row">
+  <div id="player" class="col-lg-10" style="width: 100%; height: 500px;">
+  </div>
 </div>
-
 <hr/>
 
 
 
-<tabset>
+<tabset justified="true">
   <tab heading="Video">
     <h2>Video Options</h2>
     <div class="alert alert-warning">Changing these settings will rebuffer the video from the start.</div>
@@ -58,7 +59,7 @@
       </div>
     </form>
   </tab>
-  <tab heading="Subtitles">
+  <tab heading="Subtitle">
     <h2>Subtitle Options</h2>
     <form class="form-horizontal">
       <div class="form-group"
@@ -91,6 +92,12 @@
         </div>
       </div>
     </form>
+  </tab>
+  <tab heading="Shifting">
+    <h2>Subtitle Shifting Options</h2>
+  </tab>
+  <tab heading="Sycning">
+    <h2>Syncing Options</h2>
   </tab>
   <tab heading="Player">
     <h2>Player Options</h2>
