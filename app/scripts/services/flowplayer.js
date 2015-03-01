@@ -8,7 +8,7 @@
  * Factory in the vspApp.
  */
 angular.module('vspApp')
-  .factory('flowplayer', function (localStorageService, $log, subtitle) {
+  .factory('flowplayer', function (localStorageService, $log, subtitle, $rootScope) {
     var defaults = {
       clip:  {
         autoPlay: false,
@@ -45,6 +45,9 @@ angular.module('vspApp')
     $log.debug("Default Configurations", defaults);
 
     var storedOptions = localStorageService.get('player');
+    if (storedOptions)
+      $rootScope.alerts.push({type : "success", msg: 'Settings from the last session are loaded'});
+
     $log.debug("Stored Configurations", storedOptions);
 
     var options = _.extend({}, defaults, storedOptions);
@@ -76,6 +79,12 @@ angular.module('vspApp')
 
       api.updateSubtitle = function(sub){
         subArray = subtitle(sub.text);
+
+        if(_.isEmpty(subArray)){
+          $rootScope.alerts.push({type : "danger", msg: 'No subtitles found in the file/text. Are you sure the file is a SRT file?'});
+          return;
+        }
+
         var cuepoints = _.flatten(_.map(subArray, function(sub){
           return [sub.startTime, sub.endTime];
         }));
@@ -98,6 +107,8 @@ angular.module('vspApp')
               content.setHtml("");
             }
           });
+        }else{
+          $rootScope.alerts.push({type : "danger", msg: 'Something wrong with the player.'});
         }
       };
 

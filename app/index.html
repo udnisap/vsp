@@ -49,6 +49,9 @@
     </div>
 
     <div class="container-fluid">
+    <div ng-controller="AlertsCtrl">
+      <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    </div>
     <div ng-view=""></div>
     </div>
 
@@ -96,6 +99,7 @@
         <script src="scripts/services/flowplayer.js"></script>
         <script src="scripts/directives/fileread.js"></script>
         <script src="scripts/services/subtitle.js"></script>
+        <script src="scripts/controllers/alerts.js"></script>
         <!-- endbuild -->
 </body>
 </html>

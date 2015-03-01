@@ -23,13 +23,17 @@ angular.module('vspApp')
       //console.log("Text", text);
       //console.log("-----------------");
       var segments = text.split(/^$/m);
-      console.log("Segments", segments);
+      //console.log("Segments", segments);
       return _.compact(_.map(segments, function(segment){
         var lines = _.compact(segment.split(/\n/));
         //console.log("lines", lines);
         if (_.isEmpty(lines))
           return "";
+
         var times = /([^ ]+) --> ([^ ]+)/.exec(lines[1]);
+        if (_.isEmpty(times))
+          return "";
+
         //console.log("time", times);
         return {
             startTime : floorTime(times[1]),
