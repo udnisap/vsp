@@ -10,12 +10,15 @@
 angular.module('vspApp')
   .factory('flowplayer', function (localStorageService, $log, subtitle, $rootScope) {
     var defaults = {
+      showErrors : false,
+      onError : function(code, message){
+        $rootScope.alerts.push({type:"danger", msg: message});
+      },
       clip:  {
         autoPlay: false,
         autoBuffering: true,
         scaling : "fit",
         provider: 'stream',
-        url: "video.flv"
       },
       plugins: {
         content: {
@@ -112,8 +115,6 @@ angular.module('vspApp')
         }
       };
 
-
-      initPlayer();
       return api;
     };
   });
