@@ -6,7 +6,7 @@
 
 <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 
-<div id="player" style="width: 100%; height: 00px;">
+<div id="player" style="width: 100%; height: 500px;">
 </div>
 
 <hr/>
@@ -86,7 +86,7 @@
            popover-trigger="mouseenter"
            popover-placement="bottom">
         <div class="col-sm-offset-2 col-sm-10">
-          <button ng-click="updateSubtitles()"
+          <button ng-click="updateSubtitle()"
                   class="btn btn-primary btn-lg btn-block">Update</button>
         </div>
       </div>

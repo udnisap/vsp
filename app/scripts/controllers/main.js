@@ -17,6 +17,8 @@ angular.module('vspApp')
       //{ type: 'success', msg: 'Well done! You successfully read this important alert message.' }
     ];
 
+    player =flowplayer('player');
+
     $scope.addAlert = function() {
       $scope.alerts.push({msg: 'Another alert!'});
     };
@@ -28,14 +30,14 @@ angular.module('vspApp')
     $scope.updateVideo = function(){
       var video = $scope.video;
       $log.info("Updating video", video);
-      flowplayer.updateVideo(video.source, video.url, video.suffix);
+      player.updateVideo(video.source, video.url, video.suffix);
     };
 
 
     $scope.updateSubtitle = function(){
       var subtitle = $scope.subtitle;
       $log.info("Updating subtitle", subtitle);
-      flowplayer.updateSubtitle(subtitle);
+      player.updateSubtitle(subtitle);
     };
 
 

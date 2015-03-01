@@ -8,7 +8,7 @@
  * Factory in the vspApp.
  */
 angular.module('vspApp')
-  .factory('flowplayer', function (localStorageService, $log) {
+  .factory('flowplayer', function (localStorageService, $log, subtitle) {
     var defaults = {
       clip:  {
         autoPlay: false,
@@ -49,7 +49,7 @@ angular.module('vspApp')
 
     var options = _.extend({}, defaults, storedOptions);
     var api = {};
-    var player;
+    var player, subArray;
 
     return function(playerID){
       function initPlayer(ops) {
@@ -74,8 +74,33 @@ angular.module('vspApp')
         initPlayer(options);
       };
 
-      api.updateSubtitle = function(file, text){
+      api.updateSubtitle = function(sub){
+        subArray = subtitle(sub.text);
+        var cuepoints = _.flatten(_.map(subArray, function(sub){
+          return [sub.startTime, sub.endTime];
+        }));
 
+        var startTimeIndex = _.object(_.map(subArray, function(sub){
+          return [sub.startTime, sub.text];
+        }));
+
+        var endTimeIndex = _.object(_.map(subArray, function(sub){
+          return [sub.endTime, sub.text];
+        }));
+
+        var content = player.getPlugin("content");
+        console.log(content);
+        if (content){
+          player.onCuepoint(cuepoints, function(clip, time) {
+            console.log(time);
+            var subtitle = startTimeIndex[time];
+            if (subtitle){
+              content.setHtml(subtitle);
+            }else if(endTimeIndex[time]){
+              content.setHtml("");
+            }
+          });
+        }
       };
 
 
