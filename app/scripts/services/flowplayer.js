@@ -89,10 +89,8 @@ angular.module('vspApp')
         }));
 
         var content = player.getPlugin("content");
-        console.log(content);
         if (content){
           player.onCuepoint(cuepoints, function(clip, time) {
-            console.log(time);
             var subtitle = startTimeIndex[time];
             if (subtitle){
               content.setHtml(subtitle);
