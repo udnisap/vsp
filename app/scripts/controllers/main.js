@@ -8,7 +8,7 @@
  * Controller of the vspApp
  */
 angular.module('vspApp')
-  .controller('MainCtrl', function ($scope, flowplayer) {
+  .controller('MainCtrl', function ($scope, flowplayer, $log) {
     var player = flowplayer('player');
     $scope.alerts = [
       //{ type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
@@ -24,11 +24,15 @@ angular.module('vspApp')
     };
 
     $scope.updateVideo = function(){
-      console.log($scope.video);
+      var video = $scope.video;
+      $log.info("Updating video", video);
+      flowplayer.updateVideo(video.source, video.url, video.suffix);
     };
 
     $scope.updateSubtitles = function(){
-      console.log($scope.subtitle);
+      var subtitles = $scope.subtitle;
+      $log.info("Updating subtitles", subtitles);
+      flowplayer.updateSubtitles(subtitles);
     };
 
 

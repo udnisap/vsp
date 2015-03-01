@@ -8,7 +8,7 @@
  * Factory in the vspApp.
  */
 angular.module('vspApp')
-  .factory('flowplayer', function () {
+  .factory('flowplayer', function (localStorageService, $log) {
     var defaults = {
       clip:  {
         autoPlay: false,
@@ -42,11 +42,42 @@ angular.module('vspApp')
       },
       source : ""
     };
-    var api = {};
-    return function(playerID){
-      var player = flowplayer(playerID, "swf/flowplayer-3.2.15.swf", defaults);
+    $log.debug("Default Configurations", defaults);
 
-      api.player = player;
+    var storedOptions = localStorageService.get('player');
+    $log.debug("Stored Configurations", storedOptions);
+
+    var options = _.extend({}, defaults, storedOptions);
+    var api = {};
+    var player;
+
+    return function(playerID){
+      function initPlayer(ops) {
+        options = _.extend(options, ops);
+        localStorageService.set('player',options);
+        $log.debug("Player initialized with ", options);
+        player =  flowplayer(playerID, "/vsp/swf/flowplayer-3.2.15.swf", options)
+      }
+
+      api.updateVideo = function(source, url, suffix){
+        initPlayer({
+          clip : {
+            url : url
+          },
+          plugins: {
+            stream : {
+              queryString: escape('&'+suffix+'=${start}')
+            }
+          }
+        });
+      };
+
+      api.updateSubtitles = function(file, text){
+
+      };
+
+
+      initPlayer();
       return api;
     };
   });
