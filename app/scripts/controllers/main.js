@@ -8,10 +8,6 @@
  * Controller of the vspApp
  */
 angular.module('vspApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function ($scope, flowplayer) {
+    var player = flowplayer('player');
   });
