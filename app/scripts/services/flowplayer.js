@@ -74,7 +74,7 @@ angular.module('vspApp')
         initPlayer(options);
       };
 
-      api.updateSubtitles = function(file, text){
+      api.updateSubtitle = function(file, text){
 
       };
 

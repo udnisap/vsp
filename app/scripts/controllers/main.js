@@ -31,10 +31,11 @@ angular.module('vspApp')
       flowplayer.updateVideo(video.source, video.url, video.suffix);
     };
 
-    $scope.updateSubtitles = function(){
-      var subtitles = $scope.subtitle;
-      $log.info("Updating subtitles", subtitles);
-      flowplayer.updateSubtitles(subtitles);
+
+    $scope.updateSubtitle = function(){
+      var subtitle = $scope.subtitle;
+      $log.info("Updating subtitle", subtitle);
+      flowplayer.updateSubtitle(subtitle);
     };
 
 
