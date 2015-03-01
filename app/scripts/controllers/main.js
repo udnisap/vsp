@@ -10,6 +10,8 @@
 angular.module('vspApp')
   .controller('MainCtrl', function ($scope, flowplayer, $log) {
     var player = flowplayer('player');
+    $scope.video = {};
+    $scope.subtitle = {};
     $scope.alerts = [
       //{ type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
       //{ type: 'success', msg: 'Well done! You successfully read this important alert message.' }
