@@ -42,9 +42,11 @@ angular.module('vspApp')
       },
       source : ""
     };
-    var player;
+    var api = {};
     return function(playerID){
-      player = flowplayer(playerID, "swf/flowplayer-3.2.15.swf", defaults);
-      return player;
+      var player = flowplayer(playerID, "swf/flowplayer-3.2.15.swf", defaults);
+
+      api.player = player;
+      return api;
     };
   });
