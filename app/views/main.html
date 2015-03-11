@@ -11,10 +11,10 @@
 <hr/>
 
 
-
 <tabset justified="true">
   <tab heading="Video">
     <h2>Video Options</h2>
+
     <div class="alert alert-warning">Changing these settings will rebuffer the video from the start.</div>
     <form class="form-horizontal">
       <div class="form-group"
@@ -22,6 +22,7 @@
            popover-trigger="mouseenter">
         <label for="source"
                class="col-sm-2 control-label">Source</label>
+
         <div class="col-sm-10">
           <input type="url" ng-model="video.source"
                  class="form-control" id="source" placeholder="Source">
@@ -31,6 +32,7 @@
            popover="Enter the absolute url of the video file. Addon will fill this automatically."
            popover-trigger="mouseenter">
         <label for="path" class="col-sm-2 control-label">Absolute Path</label>
+
         <div class="col-sm-10">
           <input type="url" ng-model="video.url"
                  class="form-control" id="path" placeholder="Path">
@@ -41,6 +43,7 @@
            popover-trigger="mouseenter"
         >
         <label for="suffix" class="col-sm-2 control-label">Suffix</label>
+
         <div class="col-sm-10">
           <input type="text" ng-model="video.suffix"
                  class="form-control" id="suffix" placeholder="start">
@@ -52,19 +55,22 @@
            popover-placement="bottom">
         <div class="col-sm-offset-2 col-sm-10">
           <button type="submit" ng-click="updateVideo()"
-                  class="btn btn-primary btn-lg btn-block">Update</button>
+                  class="btn btn-primary btn-lg btn-block">Update
+          </button>
         </div>
       </div>
     </form>
   </tab>
   <tab heading="Subtitle">
     <h2>Subtitle Options</h2>
+
     <form class="form-horizontal">
       <div class="form-group"
            popover="Copy Paste the raw subtitles from a file"
            popover-trigger="mouseenter">
         <label for="subtitle.text"
                class="col-sm-2 control-label">Raw Subtitles</label>
+
         <div class="col-sm-10">
           <textarea id="subtitle.text" class="form-control" rows="10"
                     class="form-control"
@@ -75,6 +81,7 @@
            popover="Open a suitable subtitles file"
            popover-trigger="mouseenter">
         <label for="subtitle.file" class="col-sm-2 control-label">File</label>
+
         <div class="col-sm-10">
           <input type="file" fileread="subtitle.text"
                  class="form-control" id="subtitle.file" placeholder="Path">
@@ -86,7 +93,8 @@
            popover-placement="bottom">
         <div class="col-sm-offset-2 col-sm-10">
           <button ng-click="updateSubtitle()"
-                  class="btn btn-primary btn-lg btn-block">Update</button>
+                  class="btn btn-primary btn-lg btn-block">Update
+          </button>
         </div>
       </div>
     </form>
@@ -96,6 +104,35 @@
   </tab>
   <tab heading="Sycning">
     <h2>Syncing Options</h2>
+
+    <p>Now you can watch videos with your friends. Share the collaboration ID and the videos will be synced.</p>
+
+    <div class="alert alert-info">Both needs to load the video separately and then share the collaboration ID to sync
+      the videos.
+    </div>
+    <form class="form-horizontal">
+      <div class="form-group"
+           popover="Share this with a friend and watch movies together."
+           popover-trigger="mouseenter">
+        <label for="collaborationsID"
+               class="col-sm-2 control-label">Collaboration ID</label>
+
+        <div class="col-sm-10">
+          <input type="text" ng-model="collaborationsID"
+                 class="form-control" id="collaborationsID" placeholder="Collaboration ID">
+        </div>
+      </div>
+      <div class="form-group"
+           popover="Setup collaboration with the given ID"
+           popover-trigger="mouseenter"
+           popover-placement="bottom">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button ng-click="runTogetherJS()"
+                  class="btn btn-primary btn-lg btn-block">Collaborate
+          </button>
+        </div>
+      </div>
+    </form>
   </tab>
   <tab heading="Player">
     <h2>Player Options</h2>

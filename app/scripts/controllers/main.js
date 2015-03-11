@@ -41,5 +41,8 @@ angular.module('vspApp')
       player.updateSubtitle(subtitle);
     };
 
+    $scope.colloborate = function(){
+      TogetherJS(this);
+    }
 
   });
