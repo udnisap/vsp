@@ -19,10 +19,10 @@ angular.module('vspApp')
     $log.debug("Router Params",$routeParams);
 
     if($routeParams.url)
-      $scope.video.url = $routeParams.url;
+      $scope.video.url = decodeURIComponent($routeParams.url);
 
     if($routeParams.source)
-      $scope.video.source = $routeParams.source;
+      $scope.video.source = decodeURIComponent($routeParams.source);
 
     $scope.updateVideo = function(){
       var video = $scope.video;
