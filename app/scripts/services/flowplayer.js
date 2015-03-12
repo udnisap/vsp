@@ -65,6 +65,10 @@ angular.module('vspApp')
         player =  flowplayer(playerID, "/swf/flowplayer-3.2.15.swf", options)
       }
 
+      api.getPlayerStatus = function(){
+        return player.getStatus();
+      };
+
       api.updateVideo = function(source, url, suffix){
         var options = {
           clip: {

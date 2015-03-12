@@ -7,6 +7,7 @@
  * # MainCtrl
  * Controller of the vspApp
  */
+
 angular.module('vspApp')
   .controller('MainCtrl', function ($scope, $rootScope, localStorageService, flowplayer, $log, $routeParams) {
     var player = flowplayer('player');
@@ -41,8 +42,35 @@ angular.module('vspApp')
       player.updateSubtitle(subtitle);
     };
 
-    $scope.colloborate = function(){
+
+    TogetherJS.on("ready", function () {
+      $log.info("TogetherJS init");
+    });
+
+    TogetherJS.on("close", function () {
+      $log.info("TogetherJS close")
+    });
+
+    TogetherJS.config("suppressInvite", true);
+    TogetherJS.config("suppressJoinConfirmation", true);
+    TogetherJS.config("dontShowClicks", true);
+    TogetherJS.config("cloneClicks", false);
+    TogetherJS.config("ignoreMessages", true);
+
+
+    $scope.collaborate = function(){
+      window.TogetherJSConfig_findRoom = $scope.share.id;
       TogetherJS(this);
-    }
+    };
+
+
+    TogetherJS.hub.on("sync", function (msg) {
+      console.log(msg);
+    });
+
+
+    $scope.sync = function(){
+      TogetherJS.send({type: "sync", message : player.getPlayerStatus()});
+    };
 
   });
