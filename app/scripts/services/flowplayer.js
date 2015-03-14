@@ -12,12 +12,12 @@ angular.module('vspApp')
     var defaults = {
       showErrors : false,
       onError : function(code, message){
-        $rootScope.addAlert({type:"danger", msg: message});
+        $rootScope.addAlert({type:'danger', msg: message});
       },
       clip:  {
         autoPlay: false,
         autoBuffering: true,
-        scaling : "fit",
+        scaling : 'fit',
         provider: 'stream',
       },
       plugins: {
@@ -36,22 +36,22 @@ angular.module('vspApp')
               color: '#ffffff'
             }
           },
-          url: "swf/flowplayer.content-3.2.8.swf"
+          url: 'swf/flowplayer.content-3.2.8.swf'
         },
         stream: {
-          url: "swf/flowplayer.pseudostreaming-3.2.11.swf"
+          url: 'swf/flowplayer.pseudostreaming-3.2.11.swf'
           //                queryString : escape('&start=${start}')
         }
       },
-      source : ""
+      source : ''
     };
-    $log.debug("Default Configurations", defaults);
+    $log.debug('Default Configurations', defaults);
 
     var storedOptions = localStorageService.get('player');
     if (storedOptions)
-      $rootScope.addAlert({type : "success", msg: 'Settings from the last session are loaded'});
+      $rootScope.addAlert({type : 'success', msg: 'Settings from the last session are loaded'});
 
-    $log.debug("Stored Configurations", storedOptions);
+    $log.debug('Stored Configurations', storedOptions);
 
     var options = _.extend({}, defaults, storedOptions);
     var api = {};
@@ -62,8 +62,8 @@ angular.module('vspApp')
       function initPlayer(ops) {
         options = _.extend(options, ops);
         localStorageService.set('player',options);
-        $log.debug("Player initialized with ", options);
-        player =  flowplayer(playerID, "/swf/flowplayer-3.2.15.swf", options)
+        $log.debug('Player initialized with ', options);
+        player =  flowplayer(playerID, '/swf/flowplayer-3.2.15.swf', options)
       }
 
       api.getSubtitles = function(){
@@ -76,7 +76,7 @@ angular.module('vspApp')
 
       api.updateSubtitles = function(subArray){
         if(_.isEmpty(subArray)){
-          $rootScope.addAlert({type : "danger", msg: 'No subtitles found in the file/text. Are you sure the file is a SRT file?'});
+          $rootScope.addAlert({type : 'danger', msg: 'No subtitles found in the file/text. Are you sure the file is a SRT file?'});
           return;
         }
 
@@ -92,7 +92,7 @@ angular.module('vspApp')
           return [sub.endTime, sub.text];
         }));
 
-        var content = player.getPlugin("content");
+        var content = player.getPlugin('content');
         if (content){
           player.onCuepoint(cuePoints, function(clip, time) {
             var subtitle = startTimeIndex[time];
@@ -103,7 +103,7 @@ angular.module('vspApp')
             }
           });
         }else{
-          $rootScope.addAlert({type : "danger", msg: 'Something wrong with the player.'});
+          $rootScope.addAlert({type : 'danger', msg: 'Something wrong with the player.'});
         }
       };
 

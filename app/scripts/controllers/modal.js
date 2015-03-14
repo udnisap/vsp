@@ -13,7 +13,7 @@ angular.module('vspApp')
     $scope.body = content.body;
 
     $scope.ok = function () {
-      $modalInstance.close("OK");
+      $modalInstance.close('OK');
     };
 
     $scope.cancel = function () {

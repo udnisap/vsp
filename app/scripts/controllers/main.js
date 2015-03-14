@@ -16,9 +16,9 @@ angular.module('vspApp')
     $scope.subtitle = localStorageService.get('subtitle') || {};
 
     if (!FileReader)
-      $rootScope.addAlert({type : "danger", msg: 'You are using an old browser and you wont be able to use file uploads. Copy paste the content of the subtitle.'});
+      $rootScope.addAlert({type : 'danger', msg: 'You are using an old browser and you wont be able to use file uploads. Copy paste the content of the subtitle.'});
 
-    $log.debug("Router Params",$routeParams);
+    $log.debug('Router Params',$routeParams);
 
     if($routeParams.url)
       $scope.video.url = decodeURIComponent($routeParams.url);
@@ -29,7 +29,7 @@ angular.module('vspApp')
     $scope.updateVideo = function(){
       var video = $scope.video;
       localStorageService.set('video',video);
-      $log.info("Updating video", video);
+      $log.info('Updating video', video);
       player.updateVideo(video.source, video.url, video.suffix);
     };
 
@@ -39,7 +39,7 @@ angular.module('vspApp')
     $scope.addSubtitlesFromText = function(){
       var subtitle = $scope.subtitle;
       localStorageService.set('subtitle', subtitle);
-      $log.info("Updating subtitle", subtitle);
+      $log.info('Updating subtitle', subtitle);
       player.addSubtitlesFromText(subtitle);
     };
 
@@ -49,13 +49,13 @@ angular.module('vspApp')
     };
 
     $scope.sync = function(){
-      console.log("Syncing");
-      sync.send("sync", {
-        comp : "Subtitles",
+      console.log('Syncing');
+      sync.send('sync', {
+        comp : 'Subtitles',
         subtitles : $scope.subtitle
       });
-      sync.send("sync", {
-        comp : "Video",
+      sync.send('sync', {
+        comp : 'Video',
         player : $scope.video
       });
     };
@@ -64,26 +64,26 @@ angular.module('vspApp')
       console.log(data);
       var name, time, subs;
       switch (data.comp) {
-        case "Video":
+        case 'Video':
           showModal(
-            "Do you want to sync Video with " + name + "?",
-            "You will be seeked to match " + name + " video."
+            'Do you want to sync Video with ' + name + '?',
+            'You will be seeked to match ' + name + ' video.'
           ).then(function () {
               player.seekTime(time);
             }, function () {
-              $log.log("Video synced rejected");
+              $log.log('Video synced rejected');
             });
 
           break;
 
-        case "Subtitles":
+        case 'Subtitles':
           showModal(
-            "Do you want to sync Subtitles with " + name + "?",
-            "Your subtitles will be removed and " + name + " subtitles will be added."
+            'Do you want to sync Subtitles with ' + name + '?',
+            'Your subtitles will be removed and ' + name + ' subtitles will be added.'
           ).then(function () {
               player.updateSubtitles(subs);
             }, function () {
-              $log.log("Subtitle synced rejected");
+              $log.log('Subtitle synced rejected');
             });
 
           break;
