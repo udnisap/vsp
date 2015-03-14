@@ -9,11 +9,17 @@
  */
 angular.module('vspApp')
   .controller('AlertsCtrl', function ($rootScope, $scope) {
-      $rootScope.alerts = [
+      $scope.alerts = [
         //{ type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
         //{ type: 'success', msg: 'Well done! You successfully read this important alert message.' }
       ];
+
+      $rootScope.addAlert = function(alert){
+        $scope.alerts.push(alert);
+        $scope.$apply();
+      };
+
       $scope.closeAlert = function(index) {
-        $rootScope.alerts.splice(index, 1);
+        $scope.alerts.splice(index, 1);
       };
   });

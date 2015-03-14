@@ -12,7 +12,7 @@ angular.module('vspApp')
     var defaults = {
       showErrors : false,
       onError : function(code, message){
-        $rootScope.alerts.push({type:"danger", msg: message});
+        $rootScope.addAlert({type:"danger", msg: message});
       },
       clip:  {
         autoPlay: false,
@@ -49,7 +49,7 @@ angular.module('vspApp')
 
     var storedOptions = localStorageService.get('player');
     if (storedOptions)
-      $rootScope.alerts.push({type : "success", msg: 'Settings from the last session are loaded'});
+      $rootScope.addAlert({type : "success", msg: 'Settings from the last session are loaded'});
 
     $log.debug("Stored Configurations", storedOptions);
 
@@ -76,7 +76,7 @@ angular.module('vspApp')
 
       api.updateSubtitles = function(subArray){
         if(_.isEmpty(subArray)){
-          $rootScope.alerts.push({type : "danger", msg: 'No subtitles found in the file/text. Are you sure the file is a SRT file?'});
+          $rootScope.addAlert({type : "danger", msg: 'No subtitles found in the file/text. Are you sure the file is a SRT file?'});
           return;
         }
 
@@ -103,7 +103,7 @@ angular.module('vspApp')
             }
           });
         }else{
-          $rootScope.alerts.push({type : "danger", msg: 'Something wrong with the player.'});
+          $rootScope.addAlert({type : "danger", msg: 'Something wrong with the player.'});
         }
       };
 
