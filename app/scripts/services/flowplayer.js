@@ -57,6 +57,7 @@ angular.module('vspApp')
     var api = {};
     var player, subArray;
 
+
     return function(playerID){
       function initPlayer(ops) {
         options = _.extend(options, ops);
@@ -64,6 +65,47 @@ angular.module('vspApp')
         $log.debug("Player initialized with ", options);
         player =  flowplayer(playerID, "/swf/flowplayer-3.2.15.swf", options)
       }
+
+      api.getSubtitles = function(){
+        return subArray;
+      };
+
+      api.seekTo = function(time){
+        player.seek(time);
+      };
+
+      api.updateSubtitles = function(subArray){
+        if(_.isEmpty(subArray)){
+          $rootScope.alerts.push({type : "danger", msg: 'No subtitles found in the file/text. Are you sure the file is a SRT file?'});
+          return;
+        }
+
+        var cuePoints = _.flatten(_.map(subArray, function(sub){
+          return [sub.startTime, sub.endTime];
+        }));
+
+        var startTimeIndex = _.object(_.map(subArray, function(sub){
+          return [sub.startTime, sub.text];
+        }));
+
+        var endTimeIndex = _.object(_.map(subArray, function(sub){
+          return [sub.endTime, sub.text];
+        }));
+
+        var content = player.getPlugin("content");
+        if (content){
+          player.onCuepoint(cuePoints, function(clip, time) {
+            var subtitle = startTimeIndex[time];
+            if (subtitle){
+              content.setHtml(subtitle);
+            }else if(endTimeIndex[time]){
+              content.setHtml("");
+            }
+          });
+        }else{
+          $rootScope.alerts.push({type : "danger", msg: 'Something wrong with the player.'});
+        }
+      };
 
       api.getPlayerStatus = function(){
         return player.getStatus();
@@ -84,39 +126,9 @@ angular.module('vspApp')
         initPlayer(options);
       };
 
-      api.updateSubtitle = function(sub){
+      api.addSubtitlesFromText = function(sub){
         subArray = subtitle(sub.text);
-
-        if(_.isEmpty(subArray)){
-          $rootScope.alerts.push({type : "danger", msg: 'No subtitles found in the file/text. Are you sure the file is a SRT file?'});
-          return;
-        }
-
-        var cuepoints = _.flatten(_.map(subArray, function(sub){
-          return [sub.startTime, sub.endTime];
-        }));
-
-        var startTimeIndex = _.object(_.map(subArray, function(sub){
-          return [sub.startTime, sub.text];
-        }));
-
-        var endTimeIndex = _.object(_.map(subArray, function(sub){
-          return [sub.endTime, sub.text];
-        }));
-
-        var content = player.getPlugin("content");
-        if (content){
-          player.onCuepoint(cuepoints, function(clip, time) {
-            var subtitle = startTimeIndex[time];
-            if (subtitle){
-              content.setHtml(subtitle);
-            }else if(endTimeIndex[time]){
-              content.setHtml("");
-            }
-          });
-        }else{
-          $rootScope.alerts.push({type : "danger", msg: 'Something wrong with the player.'});
-        }
+        api.updateSubtitles(subArray);
       };
 
       return api;

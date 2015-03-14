@@ -56,7 +56,7 @@
     </div>
 
     <div class="footer">
-      <div class="container">
+      <div class="container text-center">
         <p><span class="glyphicon glyphicon-heart"></span> from the Ideawide team</p>
       </div>
     </div>
@@ -72,6 +72,19 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
+
+      <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+          <h3 class="modal-title">{{title}}</h3>
+        </div>
+        <div class="modal-body">
+          {{body}}
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="ok()">OK</button>
+          <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+      </script>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -101,6 +114,8 @@
         <script src="scripts/directives/fileread.js"></script>
         <script src="scripts/services/subtitle.js"></script>
         <script src="scripts/controllers/alerts.js"></script>
+        <script src="scripts/services/sync.js"></script>
+        <script src="scripts/controllers/modal.js"></script>
         <!-- endbuild -->
 </body>
 </html>

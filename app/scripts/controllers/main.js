@@ -9,7 +9,8 @@
  */
 
 angular.module('vspApp')
-  .controller('MainCtrl', function ($scope, $rootScope, localStorageService, flowplayer, $log, $routeParams) {
+  .controller('MainCtrl', function ($scope, $modal, $rootScope,
+      localStorageService, flowplayer, $log, $routeParams, sync) {
     var player = flowplayer('player');
     $scope.video = _.extend({},localStorageService.get('video'));
     $scope.subtitle = localStorageService.get('subtitle') || {};
@@ -35,42 +36,76 @@ angular.module('vspApp')
     $scope.updateVideo();
 
 
-    $scope.updateSubtitle = function(){
+    $scope.addSubtitlesFromText = function(){
       var subtitle = $scope.subtitle;
       localStorageService.set('subtitle', subtitle);
       $log.info("Updating subtitle", subtitle);
-      player.updateSubtitle(subtitle);
+      player.addSubtitlesFromText(subtitle);
     };
-
-
-    TogetherJS.on("ready", function () {
-      $log.info("TogetherJS init");
-    });
-
-    TogetherJS.on("close", function () {
-      $log.info("TogetherJS close")
-    });
-
-    TogetherJS.config("suppressInvite", true);
-    TogetherJS.config("suppressJoinConfirmation", true);
-    TogetherJS.config("dontShowClicks", true);
-    TogetherJS.config("cloneClicks", false);
-    TogetherJS.config("ignoreMessages", true);
 
 
     $scope.collaborate = function(){
-      window.TogetherJSConfig_findRoom = $scope.share.id;
-      TogetherJS(this);
+      sync.init();
     };
 
+    $scope.sync = function(){
+      console.log("Syncing");
+      sync.send("sync", {
+        comp : "Subtitles",
+        subtitles : $scope.subtitle
+      });
+      sync.send("sync", {
+        comp : "Video",
+        player : $scope.video
+      });
+    };
 
-    TogetherJS.hub.on("sync", function (msg) {
-      console.log(msg);
+    sync.onSync(function(data){
+      console.log(data);
+      var name, time, subs;
+      switch (data.comp) {
+        case "Video":
+          showModal(
+            "Do you want to sync Video with " + name + "?",
+            "You will be seeked to match " + name + " video."
+          ).then(function () {
+              player.seekTime(time);
+            }, function () {
+              $log.log("Video synced rejected");
+            });
+
+          break;
+
+        case "Subtitles":
+          showModal(
+            "Do you want to sync Subtitles with " + name + "?",
+            "Your subtitles will be removed and " + name + " subtitles will be added."
+          ).then(function () {
+              player.updateSubtitles(subs);
+            }, function () {
+              $log.log("Subtitle synced rejected");
+            });
+
+          break;
+      }
     });
 
 
-    $scope.sync = function(){
-      TogetherJS.send({type: "sync", message : player.getPlayerStatus()});
-    };
+    function showModal(title, body){
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: 'ModalCtrl',
+        size: 'sm',
+        resolve: {
+          content: function () {
+            return {body : body, title : title};
+          }
+        }
+      });
+      return modalInstance.result;
+    }
+
+
+
 
   });

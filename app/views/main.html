@@ -92,7 +92,7 @@
            popover-trigger="mouseenter"
            popover-placement="bottom">
         <div class="col-sm-offset-2 col-sm-10">
-          <button ng-click="updateSubtitle()"
+          <button ng-click="addSubtitlesFromText()"
                   class="btn btn-primary btn-lg btn-block">Update
           </button>
         </div>
@@ -139,9 +139,113 @@
   </tab>
   <tab heading="Player">
     <h2>Player Options</h2>
+    <form class="form-horizontal">
+      <h3>Video</h3>
+      <div class="form-group"
+           popover="Scaling of the video"
+           popover-trigger="mouseenter">
+        <label for="scaling"
+               class="col-sm-2 control-label">Scaling</label>
+
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="flow.clip.autoBuffering" id="scaling">
+            <option value="fit">Fit</option>
+            <option value="half">Half</option>
+            <option value="orig">Original</option>
+            <option value="scale">Scale</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"
+           popover="If enabled, video will start buffering when page loads"
+           popover-trigger="mouseenter">
+        <label for="autobuffer"
+               class="col-sm-2 control-label">Auto Buffering</label>
+
+        <div class="col-sm-10">
+          <label>
+            <input type="checkbox" id="autobuffer"
+                   ng-model="flow.clip.scaling"> Buffer video when page loads
+          </label>
+        </div>
+      </div>
+      <div class="form-group"
+           popover="If enabled, video will start playing when page loads"
+           popover-trigger="mouseenter">
+        <label for="autoplay"
+               class="col-sm-2 control-label">Auto Playing</label>
+
+        <div class="col-sm-10">
+          <label>
+            <input type="checkbox"
+                 ng-model="flow.clip.autoBuffering"
+                 id="autoplay">
+            Play video when page loads
+          </label>
+        </div>
+      </div>
+      <hr/>
+      <h3>Subtitles</h3>
+      <div class="form-group"
+           popover="Font size of the caption"
+           popover-trigger="mouseenter">
+        <label for="fontSize"
+               class="col-sm-2 control-label">Font size</label>
+
+        <div class="col-sm-10">
+          <div class="input-group">
+            <input type="text" ng-model="flow.plugins.content.style.body.fontSize"
+                   class="form-control" id="fontSize" placeholder="20">
+            <div class="input-group-addon">px</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group"
+           popover="Font colour of the caption"
+           popover-trigger="mouseenter">
+        <label for="fontColour"
+               class="col-sm-2 control-label">Font Colour</label>
+
+        <div class="col-sm-10">
+          <div class="input-group">
+            <div class="input-group-addon">#</div>
+            <input type="text" ng-model="flow.plugins.content.style.body.color"
+                   class="form-control" id="fontColour" placeholder="ffffff">
+          </div>
+        </div>
+      </div>
+      <div class="form-group"
+           popover="How far the subtitles line from the bottom of the screen"
+           popover-trigger="mouseenter">
+        <label for="subBottom"
+               class="col-sm-2 control-label">Subtitle Bottom:</label>
+
+        <div class="col-sm-10">
+          <div class="input-group">
+            <input type="text" ng-model="flow.plugins.content.bottom"
+                 class="form-control" id="subBottom" placeholder="ffffff">
+            <div class="input-group-addon">px</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group"
+           popover="Height of the subtitle line"
+           popover-trigger="mouseenter">
+        <label for="subHeight"
+               class="col-sm-2 control-label">Subtitle Height:</label>
+
+        <div class="col-sm-10">
+          <div class="input-group">
+            <input type="text" ng-model="flow.plugins.content.bottom"
+                   class="form-control" id="subHeight" placeholder="ffffff">
+            <div class="input-group-addon">px</div>
+          </div>
+        </div>
+      </div>
+    </form>
   </tab>
 </tabset>
 
-<h2>Debug</h2>
-<code>{{video | json}}</code>
-<code>{{subtitle | json}}</code>
+<!--<h2>Debug</h2>-->
+<!--<code>{{video | json}}</code>-->
+<!--<code>{{subtitle | json}}</code>-->
