@@ -48,8 +48,8 @@ angular.module('vspApp')
     $log.debug('Default Configurations', defaults);
 
     var storedOptions = localStorageService.get('player');
-    if (storedOptions)
-      $rootScope.addAlert({type : 'success', msg: 'Settings from the last session are loaded'});
+    // if (storedOptions)
+    //   $rootScope.addAlert({type : 'success', msg: 'Settings from the last session are loaded'});
 
     $log.debug('Stored Configurations', storedOptions);
 
